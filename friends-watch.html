@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your One Stop To Watch Friends - WATCH FRIENDS ONLINE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .video-player {
+            max-width: 900px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .dropdown-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .dropdown-container select {
+            margin: 0 10px;
+        }
+        /* Style for the Jumpshare iframe container */
+        #jumpshareVideoContainer {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 = 0.5625) */
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 20px; /* Add some space below the video */
+            border-radius: 15px; /* Match the previous video player's border-radius */
+        }
+        #jumpshareVideoContainer iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 15px; /* Apply border-radius to the iframe */
+        }
+    </style>
+</head>
+<body>
+<div class="container video-player">
+    <a href="https://watchfriends.online"> <img src="http://watchfriends.online/wfo logo.png" class="logo"></a>
+
+    <div class="dropdown-container">
+        <select id="seasonSelect" class="form-select" style="max-width: 200px;">
+            <option value="0">Season 1</option>
+            <option value="1">Season 2</option>
+            <option value="2">Season 3</option>
+            <option value="3">Season 4</option>
+            <option value="4">Season 5</option>
+            <option value="5">Season 6</option>
+            <option value="6">Season 7</option>
+            <option value="7">Season 8</option>
+            <option value="8">Season 9</option>
+            <option value="9">Season 10</option>
+        </select>
+
+        <select id="episodeSelect" class="form-select" style="max-width: 200px;">
+            </select>
+    </div>
+
+    <div id="jumpshareVideoContainer">
+        </div>
+
+    <div class="mt-3">
+        <button id="prevEpisodeBtn" class="btn btn-primary">Previous Episode</button>
+        <button id="nextEpisodeBtn" class="btn btn-primary">Next Episode</button>
+    </div>
+
+    <div class="button-container mt-4">
+        <a href="#" id="downloadBtn" class="download-button" download>Download Episode</a>
+    </div>
+</div>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2621239143034748"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-gw-3+1f-3d+2z"
+     data-ad-client="ca-pub-2621239143034748"
+     data-ad-slot="1408277054"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<script>
+    // Define all the episodes by season with specific Jumpshare embed URLs
+    // YOU MUST REPLACE THESE WITH YOUR ACTUAL JUMPSHARE EMBED URLs
+    const episodesBySeason = [
+        // Season 1 (24 episodes)
+        [
+            "file:///I:/FRIENDS 1080P/S1/E13.mp4",
+            "https://jumpshare.com/embed/M1BsbhFFhdB2HxQpLVRf",
+            "https://jumpshare.com/embed/676FjJYVTWzj9eLxSJn0",
+            "https://jumpshare.com/embed/IwaobAdKnk13pNgVseTt",
+            "https://jumpshare.com/embed/zokWiNh35cYIJDYKHvCA",
+            "https://jumpshare.com/embed/aDo5NOtxKIRvAaRUhsn1",
+            "https://jumpshare.com/embed/SWhBPsHtvedlTUD6G4jh",
+            "https://jumpshare.com/embed/eGA16I70OecITPis9yQU",
+            "https://jumpshare.com/embed/NutGkRpty3C1wPAxENUy",
+            "https://jumpshare.com/embed/Enb3UhrZhpnpopaY0oOW",
+            "https://jumpshare.com/embed/26Dl9wxkks7S4fUhhRoX",
+            "https://jumpshare.com/embed/GklJnL3huGmOj0ea4BE9",
+            "https://jumpshare.com/embed/iOhjkazvFHW8SP7ypT6D",
+            "https://jumpshare.com/embed/oe6eJ2s7e3NAN4voLsAD",
+            "https://jumpshare.com/embed/o7Ev4Yd8Lb7t7aCKSHlz",
+            "https://jumpshare.com/embed/tMS1jhbgl4204K4eWgAv",
+            "https://jumpshare.com/embed/pVIwB6j7dW2mjBuvfLoA",
+            "https://jumpshare.com/embed/NCzwtjeZ0lK58EyEH7iM",
+        	"https://jumpshare.com/embed/VOEfT8tugPoMqljtPGaj",
+            "https://jumpshare.com/embed/hUKSgY9eQF0zwoohXDyq",
+            "https://jumpshare.com/embed/mO0TlPVnAGbxtcFJtGT4",
+            "https://jumpshare.com/embed/H3Yyyq6QeYUsjBqYBbcS",
+            "https://jumpshare.com/embed/QqtuiMu9sjaPxlnWyFtu",
+            "https://jumpshare.com/embed/SxzBK98W7es2mnAF8qH0",
+            // ... add all 24 Jumpshare embed URLs for Season 1 here
+                    ],
+        // Season 2 (24 episodes)
+        [
+            "https://jumpshare.com/embed/QCjl4OcryrG4UniR5KpC",
+            "https://jumpshare.com/embed/wwHq5HXhsdxP76KtpLA5",
+            "https://jumpshare.com/embed/qgtBSNv3LY656Rr8N91q",
+            "https://jumpshare.com/embed/DA1lObeQJknAMOPxrxWA",
+            "https://jumpshare.com/embed/UFO9cC7Qmu9sUpPz7Px3",
+            "https://jumpshare.com/embed/hCfpObQTnrCsvnPc3L50",
+            "https://jumpshare.com/embed/ZNJXMP4axc25tai1EZN6",
+            "https://jumpshare.com/embed/Mb0M3AI94RNEhXw5A4dw",
+            "https://jumpshare.com/embed/g36McA5XE8KEqPQX6BQk",
+            "https://jumpshare.com/embed/ZNTYmobzc314bGC2jXj9",
+            "https://jumpshare.com/embed/jFak0axeBTonD3EiJPmy",
+            "https://jumpshare.com/embed/D2mNMtVHZhEGqmGcZCQ2",
+            "https://jumpshare.com/embed/pmjItnXP9qQvsLQwmAdo",
+            "https://jumpshare.com/embed/xeFTK0WElCEvjQXy0wGr",
+            "https://jumpshare.com/embed/sA7oW0mlp8YTOyvWexWA",
+            "https://jumpshare.com/embed/un3w2hHwCpXWmriaRuij",
+            "https://jumpshare.com/embed/ybRSaWPbwbQIqopqFoAS",
+            "https://jumpshare.com/embed/vmZJ3kW7uhSETmcgM85O",
+            "https://jumpshare.com/embed/vomcdnW6mieVGUxILcRo",
+            "https://jumpshare.com/embed/KMeRQpFFTUoF8PezTjyX",
+            "https://jumpshare.com/embed/MowvulfYfhUnpCan4E5j",
+            "https://jumpshare.com/embed/KowHYRn2cv7kbhhYxn2Z",
+            "https://jumpshare.com/embed/BZtkzCQLiuOibEgW9ehy",
+            "https://jumpshare.com/embed/opFezYzNn6g2JycYapqq",
+
+            // ... add all 24 Jumpshare embed URLs for Season 2 here
+        ],
+        // Season 3 (25 episodes)
+        [
+            "https://jumpshare.com/embed/sU3FiBeXzWQoPrIxcWQu",
+            "https://jumpshare.com/embed/2uBp0SJLcgwhentkjmPv",
+            "https://jumpshare.com/embed/V1RV8uwStoeEkiCQpAzq",
+            "https://jumpshare.com/embed/w1dbeq73QgWtrZBFJUw3",
+            "https://jumpshare.com/embed/9WiJrbo46Hx4cUuvX1Hl",
+            "https://jumpshare.com/embed/EosrGrVqFCRG91vhI7Xw",
+            "https://jumpshare.com/embed/4ctubt6Ib6iHSyh7xc3g",
+            "https://jumpshare.com/embed/9ADQBxfop4yEwbECPnqm",
+            "https://jumpshare.com/embed/L95Xce7dQm18kv9SPtAQ",
+            "https://jumpshare.com/embed/uV9HZ0VWtG5kddv3WkfQ",
+            "https://jumpshare.com/embed/tKwv2P9VnYfhgVHBUBXk",
+            "https://jumpshare.com/embed/8G50PW4y8YSzO9k24Kf3",
+            "https://jumpshare.com/embed/pK1duWlVPhyPFMJNxD9g",
+            "https://jumpshare.com/embed/BTjwNpB0B91oQbEeQd4l",
+            "https://jumpshare.com/embed/8DQJxXR2wRVfmtKIFnK3",
+            "https://jumpshare.com/embed/TAUDznOPYIQDpEpnpO7E",
+            "https://jumpshare.com/embed/VcAvxRsoj3xIly7lswPL",
+            "https://jumpshare.com/embed/FK7dxYtvGnMJ9KZ7ePdT",
+            "https://jumpshare.com/embed/wLeeouw0ryLJK2kz5iKm",
+            "https://jumpshare.com/embed/Dphyei9p0Y9GgnLpE3Nj",
+            "https://jumpshare.com/embed/HSXou4TZMcuORSmcVh5S",
+            "https://jumpshare.com/embed/aIdX9OQSsZGr8rb5ZGA3",
+            "https://jumpshare.com/embed/HshfMAslVi7jYRDe0jzr",
+            "https://jumpshare.com/embed/HiY2Bh8TrSX81snrHtQ9",
+            "https://jumpshare.com/embed/oxl9jofysNqTW5hHAWwJ",
+
+            // ... add all 25 Jumpshare embed URLs for Season 3 here
+        ],
+        // Season 4 (24 episodes)
+        [
+            "https://jumpshare.com/embed/T274vCcFaB1RfKEgaN1d",
+            "https://jumpshare.com/embed/oHC9QFstMP3YkRUSaCJ1",
+            "https://jumpshare.com/embed/e3ioEV3nOcSIojePg1o5",
+            "https://jumpshare.com/embed/4iJ5cGLR4TT2hX6ZtDtv",
+            "https://jumpshare.com/embed/weg2YmLEncN3pfD4O1MY",
+            "https://jumpshare.com/embed/xlM5Qe7vwQYAo5M4woJQ",
+            "https://jumpshare.com/embed/lt6Do6ouCsJ8a4QZ5ZRv",
+            "https://jumpshare.com/embed/fYFCPHGruMvEL3AIoscI",
+            "https://jumpshare.com/embed/NILopEH1kZgZ0phWYEwQ",
+            "https://jumpshare.com/embed/0gOnpnZcpQ52dd3EmT5D",
+            "https://jumpshare.com/embed/j0Z82bC1eufTd36dkkLU",
+            "https://jumpshare.com/embed/NwoEQv9JJOJTxRdvbuNq",
+            "https://jumpshare.com/embed/InwdH9AiHirLJNlXKrAr",
+            "https://jumpshare.com/embed/dIxNfSMJIPRWT49FNHUC",
+            "https://jumpshare.com/embed/h1vO0sA9oKupiPy4ftjZ",
+            "https://jumpshare.com/embed/Jcbd1Mn2xEFFRx4ipxn2",
+            "https://jumpshare.com/embed/CeGPljKzvDGJIKMbAkqQ",
+            "https://jumpshare.com/embed/0VyWDz4tPiVL87lpvN3m",
+            "https://jumpshare.com/embed/wgWoFnlxPJPJx3jO9yEh",
+            "https://jumpshare.com/embed/2LhSNKasQArJmtYsJvhz",
+            "https://jumpshare.com/embed/WG9rjgH1CcKwZhUbQqF1",
+            "https://jumpshare.com/embed/zmfVQ2WrQlAu8XAC2zG0",
+            "https://jumpshare.com/embed/cCzLgEbw5DXEosIwFqAA",
+            "https://jumpshare.com/embed/GyNyClL1f02g16BGEdJA",
+
+            // ... add all 24 Jumpshare embed URLs for Season 4 here
+        ],
+        // Season 5 (24 episodes)
+        [
+            "https://jumpshare.com/embed/ZfxJ57GF3UYYNjPbcAwO",
+            "https://jumpshare.com/embed/xHZOQ6pL8VJxxklZMjJC",
+            "https://jumpshare.com/embed/ANizsdsQRAAv0YEybh64",
+            "https://jumpshare.com/embed/cf5ZXlZDuodgnSSNmBQD",
+            "https://jumpshare.com/embed/TgohT3OhLE4CJYiXDGuS",
+            "https://jumpshare.com/embed/2iX1vOCXkeeFookYDfe4",
+            "https://jumpshare.com/embed/3vNdDwPYcGg9m1x5Z8D3",
+            "https://jumpshare.com/embed/V5HOFZjoD37ahhwOFeqz",
+            "https://jumpshare.com/embed/WvDVsPbfquD621aInSGf",
+            "https://jumpshare.com/embed/arHCu5HRLDYTaSTIUIMk",
+            "https://jumpshare.com/embed/FCkOieDuYdFk87ddDmvB",
+            "https://jumpshare.com/embed/6BHBwpBhUtUABvcXwYNI",
+            "https://jumpshare.com/embed/YwTCGUi1cpiUdSPYxOBs",
+            "https://jumpshare.com/embed/ixdAVvH726s1VuxgzmDA",
+            "https://jumpshare.com/embed/5ov3w0HwWmSuwYdJokdu",
+            "https://jumpshare.com/embed/hhHLAWdZpZkE3aGz04AT",
+            "https://jumpshare.com/embed/hh9eSaBvxVJkKt6OjJep",
+            "https://jumpshare.com/embed/jo8ySbYecm9C00PlSK5p",
+            "https://jumpshare.com/embed/aQLrfe2HK27Oe15JlXej",
+            "https://jumpshare.com/embed/KPn3Cwwxd3JfymkDJWJd",
+            "https://jumpshare.com/embed/VFYjhdHAFCGZPQb6zvZN",
+            "https://jumpshare.com/embed/swdig6qNFpXU2U8MOdmR",
+            "https://jumpshare.com/embed/9TKkwlJqLwBebFkTrmYo",
+            "https://jumpshare.com/embed/TZ4okfOR49hNrtbzOrex",
+
+            // ... add all 24 Jumpshare embed URLs for Season 5 here
+        ],
+        // Season 6 (25 episodes)
+        [
+            "https://jumpshare.com/embed/K4JRJv12yP016CcL2YjR",
+            "https://jumpshare.com/embed/iLEWaxV69nOrqrz6N6Cw",
+            "https://jumpshare.com/embed/fDfEQU1Q9rL42sSda3bm",
+            "https://jumpshare.com/embed/5ORQZ4fyqzjgyrVYoL7r",
+            "https://jumpshare.com/embed/CT93XwitZzdpzKZ71Wf0",
+            "https://jumpshare.com/embed/OupUBRaJx7LkUnTNJSiJ",
+            "https://jumpshare.com/embed/dpp4KPinaU816nnxDO6u",
+            "https://jumpshare.com/embed/0jo2EVCywkCLPv05oP4z",
+            "https://jumpshare.com/embed/iI9XSJGglSojH0G64nMb",
+            "https://jumpshare.com/embed/iXcASXvtC3E8Bs1LGUK0",
+            "https://jumpshare.com/embed/8ONcVFfGR94FVvvxlAhq",
+            "https://jumpshare.com/embed/XMdVNOKy5b0OVyJTYhBA",
+            "https://jumpshare.com/embed/7kvUL2DZuMkT2mzHUQWo",
+            "https://jumpshare.com/embed/RgxETbHqFAzry3V0riHX",
+            "https://jumpshare.com/embed/mcz9C3H24ePsYY0v9ZZw",
+            "https://jumpshare.com/embed/8GL6iI0KOlV10ipvaIae",
+            "https://jumpshare.com/embed/RgxETbHqFAzry3V0riHX",
+            "https://jumpshare.com/embed/wbmN0QcrXj45S6BZsgP6",
+            "https://jumpshare.com/embed/I3LxJjRMoFZNbvvUdJKV",
+            "https://jumpshare.com/embed/kFEaszJBKGCuAPlYf7tK",
+            "https://jumpshare.com/embed/bCZHx0RmSbQpd6ZAcbeA",
+            "https://jumpshare.com/embed/QAfQD5cK8VTEIHBnqVw8",
+            "https://jumpshare.com/embed/gGBeSJz0IOvzIAwRTKn2",
+            "https://jumpshare.com/embed/FIUgtD6yJGmHa9op2I5M",
+            "https://jumpshare.com/embed/ckZoAXB2DfioaZGrSDgj",
+
+            // ... add all 25 Jumpshare embed URLs for Season 6 here
+        ],
+        // Season 7 (24 episodes)
+        [
+            "https://jumpshare.com/embed/SSUuXx4YKBzbNGRONmAt",
+            "https://jumpshare.com/embed/tW4gJov4TO7ati4vp6Kk",
+            "https://jumpshare.com/embed/qXADAHeKZBVCUcO3AHCd",
+            "https://jumpshare.com/embed/0mcToZblNYyNBl3eIoQe",
+            "https://jumpshare.com/embed/b0PkmAD53IwrCvjgxXHt",
+            "https://jumpshare.com/embed/lkJsdRM6PBL8F1ncze8z",
+            "https://jumpshare.com/embed/anS21OEQzu447w4jPacU",
+            "https://jumpshare.com/embed/VUWuc4u4CQLHfahdTm4I",
+            "https://jumpshare.com/embed/zZavmS4fx7iTdEXwBIZ8",
+            "https://jumpshare.com/embed/1cuVNxgMvBFfb2O4EKRQ",
+            "https://jumpshare.com/embed/UuOgwQAedyjy7FVOidxh",
+            "https://jumpshare.com/embed/J7M9ZZJz1v8DgVNCbDzK",
+            "https://jumpshare.com/embed/MQcCl7zqtWvlJTqADRNu",
+            "https://jumpshare.com/embed/eXhxTgC9NV8nb1vRMcRm",
+            "https://jumpshare.com/embed/QUepU20fvR0B9y5SOQLG",
+            "https://jumpshare.com/embed/OXBhH66aUNE4JjTS8ekt",
+            "https://jumpshare.com/embed/oJbF0WpbhOhTEHWjK3fV",
+            "https://jumpshare.com/embed/dHmweeq89PA2AcBSn60w",
+            "https://jumpshare.com/embed/ksl5T80bTIfSjcVyAzKT",
+            "https://jumpshare.com/embed/9WkuySo9Ji1D0zcTAgqx",
+            "https://jumpshare.com/embed/Ss4ehqDjPVqRPlBwOVAi",
+            "https://jumpshare.com/embed/HRpOn74GRHKvTQJPg4aG",
+            "https://jumpshare.com/embed/8vF6dTBq1ku2Ro4iAX02",
+            "https://jumpshare.com/embed/HjuUyWcXPrREgm6ipDfp",
+
+            // ... add all 24 Jumpshare embed URLs for Season 7 here
+        ],
+        // Season 8 (24 episodes)
+        [
+            "https://jumpshare.com/embed/2m5hn2xhoEEl3yIH5E9q",
+            "https://jumpshare.com/embed/rgAV4nV5BD95YOk5m46t",
+            "https://jumpshare.com/embed/APs3LvFhg5ErssAlMw2g",
+            "https://jumpshare.com/embed/K72q2zHZFyayM2iYfFku",
+            "https://jumpshare.com/embed/3L32ZJIqB95WtlP8L2Yj",
+            "https://jumpshare.com/embed/bLwO5W6c9PvAIQxdRcdA",
+            "https://jumpshare.com/embed/4CICm6oB5SZvtkvLDh2w",
+            "https://jumpshare.com/embed/80qzJOpm7sxxf1ivIgmv",
+            "https://jumpshare.com/embed/5djpbWdqjWkxDBWBf7Ak",
+            "https://jumpshare.com/embed/PTVbdk6NlCU8eZZrW4RK",
+            "https://jumpshare.com/embed/JfmhnVfCTwmBZ2RlJyB5",
+            "https://jumpshare.com/embed/FbVdYBMLKD6wHSiv8SxR",
+            "https://jumpshare.com/embed/OdxJ81ethrxIKnFdGIbo",
+            "https://jumpshare.com/embed/JTTsYt8VSs3EHrjuG1DG",
+            "https://jumpshare.com/embed/gOmwdT22lagoX3tylGsL",
+            "https://jumpshare.com/embed/tYptuqpgeVZEmFeM52fh",
+            "https://jumpshare.com/embed/AvPCBssGsLpnw4LDiPjS",
+            "https://jumpshare.com/embed/sfFF29BOJUgcd2My3eUT",
+            "https://jumpshare.com/embed/3YwfMGFSLYJgQOUdG6cQ",
+            "https://jumpshare.com/embed/l8a0hWuvlShI0f9c7dDX",
+            "https://jumpshare.com/embed/EcsXdKk8nqRzFG73ytgX",
+            "https://jumpshare.com/embed/NuJnl9Su8QacFrvgcZD4",
+            "https://jumpshare.com/embed/uJEBrKmXfKGznT8lVRpK",
+            "https://jumpshare.com/embed/izfxD4bymlanHAo5QbXF",
+
+            // ... add all 24 Jumpshare embed URLs for Season 8 here
+        ],
+        // Season 9 (23 episodes)
+        [
+            "https://jumpshare.com/embed/bZqEu2zXTWVZEDCZiCdV",
+            "https://jumpshare.com/embed/Kae6gVjnkzhKM3B93SCS",
+            "https://jumpshare.com/embed/0ylRmv77o9PjPOaBS0Yb",
+            "https://jumpshare.com/embed/bhKhWhVfFhW3erDJIMPf",
+            "https://jumpshare.com/embed/C56Mz30artHeRThaxTJe",
+            "https://jumpshare.com/embed/dty9EbMHbfufOmr8r4d7",
+            "https://jumpshare.com/embed/srJ03H9DvyxAe7afBvUU",
+            "https://jumpshare.com/embed/WQlNN0yy2x2S40bsFAAv",
+            "https://jumpshare.com/embed/2v9AgomDMIhcWhUfzFoV",
+            "https://jumpshare.com/embed/UJq5eG5MtyCj4Ww7nR65",
+            "https://jumpshare.com/embed/hnZ0TySS2RasXqAzvIEv",
+            "https://jumpshare.com/embed/YdqeU450GpDSWcV6duJI",
+            "https://jumpshare.com/embed/QBChoD8UaIMend20o73r",
+            "https://jumpshare.com/embed/k11SjbGFQo32oU2eQTKU",
+            "https://jumpshare.com/embed/E24lEYChWkGv6XKQSy3y",
+            "https://jumpshare.com/embed/71A32Yo5WFDlFbZGVCjk",
+            "https://jumpshare.com/embed/XTkbNbDgtexkdSuOy7qx",
+            "https://jumpshare.com/embed/ylcc6anqmEFRbss4pHqg",
+            "https://jumpshare.com/embed/eIJULQsVbWFExcqsA17t",
+            "https://jumpshare.com/embed/MbBfA7bdPQsYragOafnL",
+            "https://jumpshare.com/embed/uU1wo2o0ozKyDCFmpsoS",
+            "https://jumpshare.com/embed/GbkV3iXe4ONSuCEXFuyw",
+            "https://jumpshare.com/embed/X3aypCoNCsNg0HvwZKwi",
+
+            // ... add all 23 Jumpshare embed URLs for Season 9 here
+        ],
+        // Season 10 (17 episodes)
+        [
+            "https://jumpshare.com/embed/EelfBy3JGzkkHjPnyc9c",
+            "https://jumpshare.com/embed/HSxjx994ZBL7bsSNxLfT",
+            "https://jumpshare.com/embed/OZhEhQwcRyJwG4wEGjyK",
+            "https://jumpshare.com/embed/D5nAIT4mrShEhBsJHPsY",
+            "https://jumpshare.com/embed/BJHMtlipHtQI0d4q2KTQ",
+            "https://jumpshare.com/embed/jSR9evIXlY6Ci3gdzbIW",
+            "https://jumpshare.com/embed/fGqgAb1QOiFQkuQ9FHA2",
+            "https://jumpshare.com/embed/ihhcJtfyFXhh3OxLluIW",
+            "https://jumpshare.com/embed/KTx414CYj1HmHvrbZAAV",
+            "https://jumpshare.com/embed/1PC2uL09ZINR9WqyS4WU",
+            "https://jumpshare.com/embed/dx9KnLwfjdRTqcF0To8t",
+            "https://jumpshare.com/embed/K5ebCADHehWIP7nZ5DCg",
+            "https://jumpshare.com/embed/mg4i3RD0nU21hXVbaHgN",
+            "https://jumpshare.com/embed/7BbHwkNQ2OOmUjMLVfRo",
+            "https://jumpshare.com/embed/79IuUBvFGG20AZB06vug",
+            "https://jumpshare.com/embed/UP1uOl8xOpRCTn3vESXI",
+            "https://jumpshare.com/embed/C9hyuRsncunt6nPemo3g",
+            
+            // ... add all 17 Jumpshare embed URLs for Season 10 here
+        ]
+    ];
+
+    let currentSeasonIndex = 0;
+    let currentEpisodeIndex = 0;
+
+    const seasonSelect = document.getElementById('seasonSelect');
+    const episodeSelect = document.getElementById('episodeSelect');
+    const jumpshareVideoContainer = document.getElementById('jumpshareVideoContainer'); // Get the new container
+    const prevEpisodeBtn = document.getElementById('prevEpisodeBtn');
+    const nextEpisodeBtn = document.getElementById('nextEpisodeBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // Function to load the Jumpshare video for the selected episode
+    function loadEpisode(seasonIndex, episodeIndex, autoplay = true) { // Removed resumeFromLastPosition as it's not applicable
+        // Ensure that the requested season and episode exist
+        if (!episodesBySeason[seasonIndex] || !episodesBySeason[seasonIndex][episodeIndex]) {
+            console.error(`Error: Episode S${seasonIndex + 1}E${episodeIndex + 1} not found.`);
+            // Optionally, load a default episode or show an error message
+            return;
+        }
+
+        const episodeEmbedUrl = episodesBySeason[seasonIndex][episodeIndex];
+        console.log(`Loading: Season ${seasonIndex + 1}, Episode ${episodeIndex + 1}, Jumpshare Embed URL: ${episodeEmbedUrl}`);
+
+        // Construct the iframe HTML
+        let iframeHtml = `<iframe src="${episodeEmbedUrl}" allowfullscreen`;
+
+        // Jumpshare embeds might not have a direct autoplay parameter like standard video tags.
+        // If Jumpshare provides an autoplay option, you'd add it here.
+        // For example: if (autoplay) { iframeHtml += ` autoplay`; }
+        // Often, embeds handle autoplay based on their own player settings or initial load.
+
+        iframeHtml += `></iframe>`;
+
+        // Update the content of the container with the new iframe
+        jumpshareVideoContainer.innerHTML = iframeHtml;
+
+        // Update the URL without reloading the page
+        const newUrl = `?s=${seasonIndex + 1}&e=${episodeIndex + 1}`;
+        history.pushState({ season: seasonIndex, episode: episodeIndex }, '', newUrl);
+
+        // Update the download link
+        // NOTE: This will only work if the Jumpshare embed URL also functions as a direct download link.
+        // In most cases, Jumpshare embed URLs are for embedding, not direct file downloads.
+        // If you want a download button, you'll need the direct MP4 file URL.
+        downloadBtn.href = episodeEmbedUrl; // This will link to the embed page, not download the video
+        downloadBtn.download = `Friends_S${seasonIndex + 1}_E${episodeIndex + 1}_Jumpshare.html`; // Suggest a .html extension as it's an embed page
+
+        // Save the current episode and season to localStorage (for last watched tracking)
+        localStorage.setItem('lastWatchedSeason', seasonIndex);
+        localStorage.setItem('lastWatchedEpisode', episodeIndex);
+
+        // Update dropdown selections
+        episodeSelect.value = episodeIndex;
+        currentSeasonIndex = seasonIndex;
+        currentEpisodeIndex = episodeIndex;
+    }
+
+    // Function to populate episode dropdown for the selected season (unchanged)
+    function populateEpisodeDropdown(seasonIndex) {
+        episodeSelect.innerHTML = '';
+        if (episodesBySeason[seasonIndex]) {
+            episodesBySeason[seasonIndex].forEach((episodeUrl, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `Episode ${index + 1}`;
+                episodeSelect.appendChild(option);
+            });
+        }
+    }
+
+    // saveProgress and videoPlayer.addEventListener('timeupdate', saveProgress);
+    // videoPlayer.addEventListener('pause', saveProgress); are NOT applicable anymore.
+    // The Jumpshare embed does not expose its current playback time to your script.
+
+    // Event listener for season selection change
+    seasonSelect.addEventListener('change', (e) => {
+        const seasonIndex = parseInt(e.target.value);
+        populateEpisodeDropdown(seasonIndex);
+        if (episodesBySeason[seasonIndex] && episodesBySeason[seasonIndex].length > 0) {
+            loadEpisode(seasonIndex, 0, true); // Autoplay the first episode of new season
+        }
+    });
+
+    // Event listener for episode selection change
+    episodeSelect.addEventListener('change', (e) => {
+        const episodeIndex = parseInt(e.target.value);
+        loadEpisode(currentSeasonIndex, episodeIndex, true); // Autoplay selected episode
+    });
+
+    // Event listener for previous episode button
+    prevEpisodeBtn.addEventListener('click', () => {
+        if (currentEpisodeIndex > 0) {
+            loadEpisode(currentSeasonIndex, currentEpisodeIndex - 1, true);
+        } else if (currentSeasonIndex > 0) {
+            const prevSeasonEpisodes = episodesBySeason[currentSeasonIndex - 1];
+            loadEpisode(currentSeasonIndex - 1, prevSeasonEpisodes.length - 1, true);
+        }
+    });
+
+    // Event listener for next episode button
+    nextEpisodeBtn.addEventListener('click', () => {
+        if (currentEpisodeIndex < episodesBySeason[currentSeasonIndex].length - 1) {
+            loadEpisode(currentSeasonIndex, currentEpisodeIndex + 1, true);
+        } else if (currentSeasonIndex < episodesBySeason.length - 1) {
+            loadEpisode(currentSeasonIndex + 1, 0, true);
+        }
+    });
+
+    // Load the last watched episode (from localStorage) if available
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const savedSeason = urlParams.get('s');
+        const savedEpisode = urlParams.get('e');
+
+        if (savedSeason !== null && savedEpisode !== null) {
+            const seasonIndex = parseInt(savedSeason) - 1;
+            const episodeIndex = parseInt(savedEpisode) - 1;
+
+            if (episodesBySeason[seasonIndex] && episodesBySeason[seasonIndex][episodeIndex]) {
+                seasonSelect.value = seasonIndex;
+                populateEpisodeDropdown(seasonIndex);
+                loadEpisode(seasonIndex, episodeIndex, true);
+            } else {
+                populateEpisodeDropdown(0);
+                loadEpisode(0, 0, true);
+            }
+        } else {
+            populateEpisodeDropdown(0);
+            loadEpisode(0, 0, true);
+        }
+    };
+
+    // Handle back/forward browser navigation
+    window.addEventListener('popstate', (event) => {
+        if (event.state) {
+            loadEpisode(event.state.season, event.state.episode, false); // Don't explicitly try to autoplay
+        }
+    });
+
+    // Autoplay the next episode when the current episode ends
+    // This functionality will NOT work directly with Jumpshare embeds as your script can't detect when their video ends.
+    // If Jumpshare offers a JavaScript API for this, it would need to be integrated.
+    // videoPlayer.addEventListener('ended', ...); // REMOVE OR COMMENT OUT
+</script>
+
+<style>
+    *, body, html {background-color: #490a3d;}
+    * {color: #fff;}
+    img {width: 100%;}
+    /* .video-player video styles are now replaced by #jumpshareVideoContainer iframe styles */
+
+    h1 {
+        font-family: Helvetica, Roboto, Arial;
+        font-size: 44px;
+        color: #af76c2;
+    }
+
+    .button-container {
+        text-align: center;
+    }
+
+    .download-button {
+        display: inline-block;
+        padding: 20px 40px;
+        font-size: 1.5em;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        font-family: Helvetica, Arial, Roboto;
+        font-weight: bold;
+        display: none;
+    }
+
+    .download-button:hover {
+        background-color: #218838;
+    }
+
+    h3 {
+        font-family: Helvetica, Arial, Roboto;
+        color: wheat;
+        font-weight: bold;
+    }
+
+    .wheat {color: wheat}
+    .lightgreen {color: lightgreen}
+
+    img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+    @media (max-width: 768px) {
+        .logo {
+            width: 100%;
+        }
+    }
+</style>
+</body>
+</html>
